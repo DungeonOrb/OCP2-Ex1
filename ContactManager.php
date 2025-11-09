@@ -3,16 +3,6 @@
 class ContactManager{
 
 
-    /*public static function findAll() 
-    {
-        $db = DBConnect::getPDO();
-        $contacts = $db->query('SELECT * FROM contact ORDER BY id ASC');
-        foreach($contacts as $contact)
-        {
-            echo $contact['id']. " ". $contact['name']. " ". $contact['email']. " ". $contact['phone_number']. "\n";
-        }
-    }*/
-
     public function findAll(): array
     {
         $db = DBConnect::getPDO();
