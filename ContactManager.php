@@ -18,6 +18,22 @@ class ContactManager{
         return $contacts;
     }
 
+public function findById(int $id): ?Contact
+    {
+        $db = DBConnect::getPDO();
+        $stmt = $db->prepare(
+            "SELECT id, name, email, phone_number FROM contact WHERE id = ?"
+        );
+        $stmt->execute([$id]);
+        $row = $stmt->fetch();
+
+        if (!$row) {
+            return null; // si aucun résultat trouvé
+        }
+
+        return $this->mapRowToContact($row);
+    }
+
     private function mapRowToContact(array $r): Contact
     {
         $contact = new Contact();

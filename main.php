@@ -8,3 +8,5 @@ $line = readline("Entrez votre commande : ");
 if ($line == "list") {
     $command->list();
     }
+    elseif (preg_match('/^detail\s+\d+/', $line)) {
+        $command->detail($line); }
