@@ -13,4 +13,6 @@ if ($line == "list") {
     $command->create($line);
 } elseif (preg_match('/^delete\s+\d+/', $line)) {
     $command->delete($line);
+} elseif ($line == "help") {
+    $command->help();
 }

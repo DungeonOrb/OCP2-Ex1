@@ -67,4 +67,9 @@ class Command
             echo "Aucun contact trouvé avec l'ID {$id}." . PHP_EOL;
         }
     }
+    public function help(): void
+    {
+        
+            echo "Liste des commandes:" . PHP_EOL . "list: affiche les détails de l'ensemble des contacts de la base de données" . PHP_EOL . "detail [id]: affiche les détails d'un seul contact" . PHP_EOL . "create [nom] [email] [téléphone]: créer un nouveau contact dans la base de données" . PHP_EOL . "delete [id]: supprime un seul contact dans la base de données" . PHP_EOL . "help: affiche l'aide des commandes";
+    }
 }
