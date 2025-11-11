@@ -35,11 +35,11 @@ class Command
             echo $contact . PHP_EOL;
         }
     }
-     public function create(string $input): void
+    public function create(string $input): void
     {
         $this->manager = new ContactManager();
         // Match "create name email phone"
-        if (!preg_match('/^create\s+(\S+)\s+(\S+)\s+(\S+)$/i', trim($input), $matches)) {
+        if (!preg_match('/^create\s+(\S+)\s+(\S+)\s+(\S+)/', trim($input), $matches)) {
             echo " Format invalide. Utilisez : create [nom] [email] [téléphone]" . PHP_EOL;
             return;
         }
@@ -49,5 +49,22 @@ class Command
         $contact = $this->manager->new($name, $email, $phone);
 
         echo "✅ Nouveau contact ajouté : " . $contact . PHP_EOL;
+    }
+    public function delete(string $input): void
+    {
+        if (!preg_match('/^delete\s+(\d+)/', trim($input), $matches)) {
+            echo "Format invalide. Utilisez : delete [id]" . PHP_EOL;
+            return;
+        }
+
+        $id = (int)$matches[1];
+
+        $deleted = $this->manager->deleteById($id);
+
+        if ($deleted) {
+            echo "Contact #{$id} supprimé avec succès." . PHP_EOL;
+        } else {
+            echo "Aucun contact trouvé avec l'ID {$id}." . PHP_EOL;
+        }
     }
 }

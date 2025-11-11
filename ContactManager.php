@@ -43,15 +43,15 @@ class ContactManager
         );
         $query->execute([$name, $email, $phoneNumber]);
 
-        // get the new contact's ID
-        $id = (int)$db->lastInsertId();
+        
+        $id = (int)$db->lastInsertId(); // récupérer l'ID du contact qui vient d'être ajouté
         $query = $db->prepare(
             "SELECT id, name, email, phone_number FROM contact WHERE id = ?"
         );
         $query->execute([$id]);
         $row = $query->fetch(\PDO::FETCH_ASSOC);
-        // build and return the new Contact object
-        return $this->mapRowToContact($row);
+        
+        return $this->mapRowToContact($row); // retourne le contact sous forme de liste pour le montrer à l'utilisateur
 
         return $contact;
     }
@@ -64,5 +64,14 @@ class ContactManager
         $contact->setEmail($r['email']);
         $contact->setPhoneNumber($r['phone_number']);
         return $contact;
+    }
+    public function deleteById(int $id): bool
+    {
+        $db = DBConnect::getPDO();
+
+        $query = $db->prepare("DELETE FROM contact WHERE id = ?");
+        $query->execute([$id]);
+
+        return true;
     }
 }

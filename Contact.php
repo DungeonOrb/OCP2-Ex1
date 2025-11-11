@@ -26,7 +26,7 @@ class Contact
     {
         return $this->phoneNumber;
     }
-    
+
     public function setId(?int $id): void
     {
         $this->id = $id;
@@ -56,5 +56,4 @@ class Contact
     {
         return "[{$this->id}] {$this->name} | {$this->email} | {$this->phoneNumber}";
     }
-
 }
