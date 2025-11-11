@@ -10,3 +10,5 @@ if ($line == "list") {
     }
     elseif (preg_match('/^detail\s+\d+/', $line)) {
         $command->detail($line); }
+    elseif (preg_match('/^create\s+\S+\s+\S+\s+\S+$/i', $line)) {
+        $command->create($line); }

@@ -35,4 +35,19 @@ class Command
             echo $contact . PHP_EOL;
         }
     }
+     public function create(string $input): void
+    {
+        $this->manager = new ContactManager();
+        // Match "create name email phone"
+        if (!preg_match('/^create\s+(\S+)\s+(\S+)\s+(\S+)$/i', trim($input), $matches)) {
+            echo " Format invalide. Utilisez : create [nom] [email] [téléphone]" . PHP_EOL;
+            return;
+        }
+
+        [$all, $name, $email, $phone] = $matches;
+
+        $contact = $this->manager->new($name, $email, $phone);
+
+        echo "✅ Nouveau contact ajouté : " . $contact . PHP_EOL;
+    }
 }

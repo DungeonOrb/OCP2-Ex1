@@ -1,6 +1,7 @@
 <?php
 
-class ContactManager{
+class ContactManager
+{
 
 
     public function findAll(): array
@@ -18,20 +19,41 @@ class ContactManager{
         return $contacts;
     }
 
-public function findById(int $id): ?Contact
+    public function findById(int $id): ?Contact
     {
         $db = DBConnect::getPDO();
-        $stmt = $db->prepare(
+        $query = $db->prepare(
             "SELECT id, name, email, phone_number FROM contact WHERE id = ?"
         );
-        $stmt->execute([$id]);
-        $row = $stmt->fetch();
+        $query->execute([$id]);
+        $row = $query->fetch();
 
         if (!$row) {
             return null; // si aucun résultat trouvé
         }
 
         return $this->mapRowToContact($row);
+    }
+
+    public function new(string $name, string $email, string $phoneNumber): Contact
+    {
+        $db = DBConnect::getPDO();
+        $query = $db->prepare(
+            "INSERT INTO contact (name, email, phone_number) VALUES (?, ?, ?)"
+        );
+        $query->execute([$name, $email, $phoneNumber]);
+
+        // get the new contact's ID
+        $id = (int)$db->lastInsertId();
+        $query = $db->prepare(
+            "SELECT id, name, email, phone_number FROM contact WHERE id = ?"
+        );
+        $query->execute([$id]);
+        $row = $query->fetch(\PDO::FETCH_ASSOC);
+        // build and return the new Contact object
+        return $this->mapRowToContact($row);
+
+        return $contact;
     }
 
     private function mapRowToContact(array $r): Contact
